@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Attendance App</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-image: url('background.jpg'); /* Replace 'background.jpg' with the path to your background image */
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-position: center;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+    header {
+      background-image: url('imag4.png'); /* Background image for the header */
+      background-size: contain;
+      background-repeat: no-repeat;
+      background-position: center;
+      background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black background */
+      color: #fff;
+      padding: 40px;
+      text-align: center;
+    }
+    header h1 {
+      display: none; /* Initially hide the h1 element */
+    }
+    @media only screen and (min-width: 769px) {
+      header h1 {
+        display: block; /* Show the h1 element on screens wider than 768px */
+      }
+      header{
+        padding: 40px;
+      }
+    }
+    footer{
+        background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black background */
+      color: #fff;
+      padding: 20px;
+      text-align: center;
+    }
+    nav {
+      background-color: #333;
+      color: #fff;
+      padding: 10px;
+    }
+    nav ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      justify-content: center;
+    }
+    nav li {
+      margin: 0 10px;
+    }
+    nav a {
+      text-decoration: none;
+      color: #fff;
+    }
+    aside {
+      background-color: #f4f4f4;
+      width: 30%;
+      padding-left: 15px;
+      margin-left: 15px;
+      float: left;
+      display: block; /* Initially display the aside */
+    }
+    .container {
+      flex: 1;
+      display: flex;
+    }
+    main {
+      flex: 1;
+      padding: 20px;
+    }
+    .content {
+      max-width: 800px;
+      width: 100%;
+      padding: 20px;
+      background-color: rgba(255, 255, 255, 0.9); /* Semi-transparent white background */
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    }
+    h1, h2 {
+      color: #333;
+      text-align: initial;
+    }
+    .button {
+      margin-top: 20px;
+      padding: 10px 20px;
+      background-color: #007bff;
+      color: #fff;
+      text-align: center;
+      text-decoration: none;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+      display: block;
+      width: 100%;
+    }
+    .button:hover {
+      background-color: #0057b300;
+    }
+    .menu-button {
+      display: block;
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      z-index: 9999;
+      background: transparent;
+      border: none;
+      cursor: pointer;
+    }
+    .menu-icon {
+      width: 30px;
+      height: 3px;
+      background-color: #fff;
+      display: block;
+      margin: 6px auto;
+      transition: background-color 0.3s, transform 0.3s;
+    }
+    .menu-icon.middle {
+      margin: 0 auto;
+    }
+    .menu-open .menu-icon.top {
+      transform: translateY(12px) rotate(45deg);
+    }
+    .menu-open .menu-icon.middle {
+      opacity: 0;
+    }
+    .menu-open .menu-icon.bottom {
+      transform: translateY(-12px) rotate(-45deg);
+    }
+    .menu {
+      display: none;
+      position: fixed;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      background-color: rgba(0, 0, 0, 0.5);
+      z-index: 9998;
+    }
+    .menu.open {
+      display: block;
+    }
+    .menu-content {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      text-align: center;
+    }
+    .menu-item {
+      margin-bottom: 20px;
+    }
+    footer {
+      margin-top: auto;
+    }
+    .dropdown {
+      position: relative;
+      display: inline-block;
+    }
+
+    .dropdown-content {
+      display: none;
+      position: absolute;
+      background-color: #444;
+      min-width: 160px;
+      z-index: 1;
+    }
+
+    .dropdown-content a {
+      color: white;
+      padding: 12px 16px;
+      text-decoration: none;
+      display: block;
+    }
+
+    .dropdown-content a:hover {
+      background-color: #333;
+    }
+
+    .dropdown:hover .dropdown-content {
+      display: block;
+    }
+
+    .dropbtn {
+      display: inline-block;
+    }
+
+    @media only screen and (max-width: 768px) {
+      aside {
+        display: none; /* Hide the aside on smaller screens */
+      }
+    }
+
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1> Attendance App</h1>
+    <button class="menu-button" id="menuButton" aria-label="Toggle Menu">
+      <span class="menu-icon top"></span>
+      <span class="menu-icon middle"></span>
+      <span class="menu-icon bottom"></span>
+    </button>
+  </header>
+
+  <nav>
+    <ul>
+      <li class="dropdown">
+        <a href="#" class="dropbtn">Take Attendance</a>
+        <div class="dropdown-content">
+          <a href="take_attendance.html"> Members</a>
+          <a href="take_attendance1.html">Volunteers</a>
+        </div>
+      </li>
+      <li class="dropdown">
+        <a href="#" class="dropbtn">View Attendance</a>
+        <div class="dropdown-content">
+          <a href="view_attendance.html"> Members</a>
+          <a href="view_attendance1.html">Volunteers</a>
+        </div>
+      </li>
+      <!--<li><a href="view_attendance.html">View Attendance</a></li>-->
+      <li><a href="message.html">Message box</a></li>
+    </ul>
+  </nav>
+  
+
+  <!--<div class="menu" id="menu">
+    <div class="menu-content">
+      <div class="menu-item">
+        <a class="button" >Take attendance</a>
+        <a href="take_attendance.html" class="button">Members</a>
+        <a href="take_attendance1.html" class="button">Volunteers</a>
+      </div>
+      <div class="menu-item">
+        <a href="view_attendance.html" class="button">View Attendance</a>
+      </div>
+    </div>
+  </div>-->
+
+  <div class="menu" id="menu"> 
+    <div class="menu-content">
+        <h2><a class="button">Events</a></h2>
+      <ul>
+        <li><a class="button">Food distribution</a></li><br>
+        <li><a class="button">Government school paintings</a></li><br>
+        <li><a class="button">weekend classes at slums</a></li><br>
+        <li><a class="button"> Menstrual hygiene programs</a></li><br>
+        <li><a class="button"> Computer classes healthcare</a></li><br>
+        <li><a class="button">Plastic awerness program</a></li><br>
+        <li><a class="button">Plantation</a></li><br>
+       
+       
+      </ul>
+    </div>
+  </div> 
+  <div class="container"> 
+    <aside>
+      <h2>Events</h2>
+      <ul>
+        <li><a>Food distribution</a></li><br>
+        <li><a >Government school paintings</a></li><br>
+        <li><a >weekend classes at slums</a></li><br>
+        <li><a> Menstrual hygiene programs</a></li><br>
+        <li><a > Computer classes </a></li><br>
+        <li><a >Plastic awerness program</a></li><br>
+        <li><a >Plantation</a></li><br>
+        <li><a >Cancer awerness program</a></li><br>
+        <li><a >Health camp's </a></li><br>
+        <li><a >Supporting street vendors</a></li><br>
+        <li><a >Supporting oldage homes</a></li><br>
+        <li><a >Traffic awerness program</a></li><br>
+        <li><a >Historical places restoration</a></li><br>
+        <li><a >Cleaning drives </a></li><br>
+        <li><a >Plants distribution</a></li><br>
+      </ul>
+    </aside>
+    <main>
+      <div class="content">
+        <h2>Bharavase Trust</h2>
+        <p>This app helps you to mark and view attendance.</p>
+      </div>
+    </main>
+  </div>
+
+  <footer>
+    <p>&copy; 2024 Attendance App. All rights reserved.</p>
+  </footer>
+
+  <script>
+    const menuButton = document.getElementById('menuButton');
+    const menu = document.getElementById('menu');
+    menuButton.addEventListener('click', function() {
+      menu.classList.toggle('open');
+    });
+  </script>
+
+</body>
+</html>

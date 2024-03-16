@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Take Attendance - Attendance App</title>
+  <style>
+
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f8f8f8;
+    }
+
+    header {
+      background-color: #333;
+      color: #fff;
+      padding: 20px;
+      text-align: center;
+    }
+
+    .logo {
+      margin-bottom: 10px;
+    }
+
+    .logo img {
+      width: 100px; /* Adjust the width of the logo as needed */
+      height: auto;
+    }
+
+    nav {
+      background-color: #444;
+      color: #fff;
+      padding: 10px;
+    }
+
+    nav ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      justify-content: center;
+    }
+
+    nav li {
+      margin: 0 10px;
+    }
+
+    nav a {
+      text-decoration: none;
+      color: #fff;
+    }
+
+    .container {
+      width: 100vw;
+      height: 100vh;
+      padding: 20px;
+      background-color: #fff;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    footer {
+      background-color: #333;
+      color: #fff;
+      padding: 10px;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="logo">
+      <img src="logo1.jpg" alt="Attendance App Logo">
+    </div>
+    <h1>Attendance for Volunteers</h1>
+  </header>
+
+  <nav>
+    <ul>
+      <li><a href="home.html">Home</a></li>
+      <li><a href="view_attendance.html">View Attendance</a></li>
+    </ul>
+  </nav>
+
+  <div class="container">
+    <h1>Mark Attendance</h1>
+    <form id="attendanceForm" action="submit_attendance" method="post">
+      <label for="events">Events:</label>
+      <input type="text" id="events" name="events" placeholder="Enter event name " required><br><br>
+
+      <label for="date">Date:</label>
+      <input type="date" id="date" name="date" required><br><br>
+
+      
+
+      <label for="attendance">Attendance:</label>
+      <textarea id="attendance" name="attendance" rows="5" placeholder="Enter name" required></textarea><br><br>
+
+      <button type="button" class="sub" id="submit">Submit</button>
+    </form>
+  </div>
+
+  <footer>
+    <p>&copy; 2024 Attendance App. All rights reserved.</p>
+  </footer>
+
+  <script src="https://www.gstatic.com/firebasejs/8.4.2/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.4.2/firebase-database.js"></script>
+  
+  <script src="./fireconfig1.js"></script>
+
+  <script src="./crud1.js"></script>
+</body>
+</html>

@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>View Attendance - Attendance App</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+    header, footer {
+      background-color: #333;
+      color: #fff;
+      padding: 20px;
+      text-align: center;
+    }
+    main {
+      width: 100vw;
+      height: 100vh;
+      padding: 20px;
+      width: 50%;
+      margin: 0 auto; 
+    }
+    .search-container {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    .search-box {
+      padding: 10px;
+      width: 300px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      margin-right: 10px;
+    }
+    .submit-button {
+      padding: 10px 20px;
+      background-color: #007bff;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .submit-button:hover {
+      background-color: #0056b3;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    th, td {
+      border: 1px solid #ddd;
+      padding: 8px;
+      text-align: left;
+    }
+    th {
+      background-color: #f2f2f2;
+    }
+    nav {
+      background-color: #444;
+      color: #fff;
+      padding: 10px;
+    }
+
+    nav ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      justify-content: center;
+    }
+
+    nav li {
+      margin: 0 10px;
+    }
+
+    nav a {
+      text-decoration: none;
+      color: #fff;
+    }
+
+    .logo {
+      margin-bottom: 10px;
+    }
+
+    .logo img {
+      width: 100px; /* Adjust the width of the logo as needed */
+      height: auto;
+    }
+  </style>
+</head>
+<body onload="readData()">
+
+  <header>
+    <div class="logo">
+      <img src="logo1.jpg" alt="Attendance App Logo">
+      <h1>View Attendance</h1>
+    </div>
+  </header>
+
+  <nav>
+    <ul>
+      <li><a href="home.html">Home</a></li>
+    </ul>
+  </nav>
+
+  <main>
+    <div class="search-container">
+      <label for="search">Search:</label>
+      <input type="text" id="search" name="search" class="search-box" placeholder="Enter name...">
+      <button type="button" class="sub" id="submit">Submit</button>
+    </div>
+    <div id="attendance-table-container"></div>
+  </main>
+
+  <footer>
+    <p>&copy; 2024 Attendance App. All rights reserved.</p>
+  </footer>
+  
+  <script src="https://www.gstatic.com/firebasejs/8.4.2/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.4.2/firebase-database.js"></script>
+    
+  
+  <script src="./viewfireconfig.js"></script>
+  
+
+  <script>
+    // Initialize Firebase
+    //firebase.initializeApp(firebaseConfig);
+
+    // Function to read data from Firebase and display in table
+    function readData() {
+      const tableContainer = document.getElementById("attendance-table-container");
+      tableContainer.innerHTML = ""; // Clear previous content
+    
+      const searchValue = document.getElementById("search").value.toLowerCase(); // Convert search value to lowercase for case-insensitive comparison
+    
+      firebase.database().ref("Volunteers/").once("value")
+        .then(function(snapshot) {
+          snapshot.forEach(function(childSnapshot) {
+            // Retrieve data from each child node
+            var eventData = childSnapshot.val();
+    
+            // Check if the attendance matches the search value
+            if (eventData.eventsV.toLowerCase() === searchValue || eventData.attendanceV.toLowerCase() === searchValue) {
+              // Create table row
+              const row = document.createElement("tr");
+    
+              // Create and append table cells for each data attribute
+              const eventCell = document.createElement("td");
+              eventCell.textContent = eventData.eventsV;
+              row.appendChild(eventCell);
+    
+              const dateCell = document.createElement("td");
+              dateCell.textContent = eventData.dateV;
+              row.appendChild(dateCell);
+    
+              const attendanceCell = document.createElement("td");
+              attendanceCell.textContent = eventData.attendanceV;
+              row.appendChild(attendanceCell);
+    
+              // Append the row to the table container
+              tableContainer.appendChild(row);
+            }
+          });
+        })
+        .catch(function(error) {
+          console.error("Error reading data from Firebase:", error);
+        });
+    }
+
+    // Add event listener to the submit button
+    document.getElementById("submit").addEventListener("click", function() {
+      readData(); // Call the readData function when the submit button is clicked
+    });
+  </script>
+
+
+</body>
+</html>
